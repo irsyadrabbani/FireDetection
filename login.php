@@ -1,3 +1,7 @@
+<?php
+  session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,14 +48,14 @@
                                     <form class="user">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
-                                                id="username" aria-describedby="UsernameHelp"
+                                                name="username" aria-describedby="UsernameHelp"
                                                 placeholder="Enter Username">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="password" placeholder="Password">
+                                                name="password" placeholder="Password">
                                         </div>
-                                        <a class="btn btn-danger btn-user btn-block" id="login">
+                                        <a class="btn btn-danger btn-user btn-block" name="submit">
                                             Login
                                         </a>
                                         <hr>
@@ -76,10 +80,10 @@
     <?php
         if (isset($_POST['submit']) ){
           include "koneksi.php";
-          $username = $_POST['user'];
-          $password = $_POST['pass'];
+          $username = $_POST['username'];
+          $password = $_POST['password'];
 
-          $cek_user = mysqli_query($konek,"SELECT * FROM tb_admin WHERE username='$username'");
+          $cek_user = mysqli_query($konek,"SELECT * FROM tb_login WHERE username='$username'");
           $row      = mysqli_num_rows($cek_user);
 
           if($row == 1){
