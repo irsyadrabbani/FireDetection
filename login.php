@@ -1,7 +1,3 @@
-<?php
-  session_start();
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,6 +20,10 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body class="bg-gradient-danger">
@@ -45,17 +45,17 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome!!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" action="" method="POST">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user"
                                                 name="username" aria-describedby="UsernameHelp"
-                                                placeholder="Enter Username">
+                                                placeholder="Enter Username" required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                name="password" placeholder="Password">
+                                                name="password" placeholder="Password" required>
                                         </div>
-                                        <a class="btn btn-danger btn-user btn-block" name="submit">
+                                        <a class="btn btn-danger btn-user btn-block" type="submit" name="submit">
                                             Login
                                         </a>
                                         <hr>
@@ -77,35 +77,10 @@
 
     </div>
 
-    <?php
-        if (isset($_POST['submit']) ){
-          include "koneksi.php";
-          $username = $_POST['username'];
-          $password = $_POST['password'];
-
-          $cek_user = mysqli_query($konek,"SELECT * FROM tb_login WHERE username='$username'");
-          $row      = mysqli_num_rows($cek_user);
-
-          if($row == 1){
-            //jalankan prosedur seleksi password
-            $fetch_pass = mysqli_fetch_assoc($cek_user);
-            $cek_pass   = $fetch_pass['password'];
-            if($cek_pass != $password){
-              echo "<script>alert('Password salah');</script>";
-            }else{
-               $_SESSION['login'] = true;
-              echo "<script>alert('Login Berhasil');document.location.href='../DeteksiKebakaran/home'</script>";
-            }
-          }else{
-            echo"<script>alert('Username salah');</script>";
-          }
-        }
-    ?>
+    
 
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
