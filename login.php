@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>Fire Detection - Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -22,7 +22,7 @@
 
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient-danger">
 
     <div class="container">
 
@@ -39,43 +39,28 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Welcome!!</h1>
                                     </div>
                                     <form class="user">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                            <input type="text" class="form-control form-control-user"
+                                                id="username" aria-describedby="UsernameHelp"
+                                                placeholder="Enter Username">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                                id="password" placeholder="Password">
                                         </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                        <a class="btn btn-danger btn-user btn-block" id="login">
                                             Login
                                         </a>
                                         <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
                                     </form>
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
                                     </div>
-                                    <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -87,6 +72,32 @@
         </div>
 
     </div>
+
+    <?php
+        if (isset($_POST['submit']) ){
+          include "koneksi.php";
+          $username = $_POST['user'];
+          $password = $_POST['pass'];
+
+          $cek_user = mysqli_query($konek,"SELECT * FROM tb_admin WHERE username='$username'");
+          $row      = mysqli_num_rows($cek_user);
+
+          if($row == 1){
+            //jalankan prosedur seleksi password
+            $fetch_pass = mysqli_fetch_assoc($cek_user);
+            $cek_pass   = $fetch_pass['password'];
+            if($cek_pass != $password){
+              echo "<script>alert('Password salah');</script>";
+            }else{
+               $_SESSION['login'] = true;
+              echo "<script>alert('Login Berhasil');document.location.href='../DeteksiKebakaran/home'</script>";
+            }
+          }else{
+            echo"<script>alert('Username salah');</script>";
+          }
+        }
+    ?>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
