@@ -1,4 +1,29 @@
+<?php
 
+  //include koneksi
+  include "koneksi.php";
+
+  $sql = mysqli_query($konek, "SELECT * FROM tb_kontrol");
+  $data = mysqli_fetch_array($sql);
+  // ambil status fan
+  $fan = $data['fan'];
+  // ambil status pompa
+  $pompa = $data['pompa'];
+   
+?>
+
+
+<?php
+
+  //include koneksi
+  include "koneksi.php";
+
+  $sql = mysqli_query($konek, "SELECT api FROM tb_api");
+  $data = mysqli_fetch_array($sql);
+  // ambil status api
+  $api = $data['api'];
+   
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,9 +61,77 @@
           } ); //Akhir Nilai Realtime
           </script>
 
+          <!--Relay Fan -->
+        <script type="text/javascript">
+            function ubahfan(value) 
+          {
+            if (value==true) value="ON";
+            else value="OFF";
+            document.getElementById('status').innerHTML = value;
+
+            //ajax untuk merubah status relay
+            var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function()
+            {
+              if (xmlhttp.readyState == 4 && xmlhttp.status == 200 )
+              {
+                //ambil respon dari web
+                document.getElementById('status').innerHTML = xmlhttp.responseText;
+              }
+            }
+            //eksekusi file PHP untuk merubah nilai database
+            xmlhttp.open("GET", "fan.php?stat=" + value, true);
+            //kirim data
+            xmlhttp.send();
+          }
+
+            //Relay Water Pump
+            function ubahpompa(value) 
+          {
+            if (value==true) value="ON";
+            else value="OFF";
+            document.getElementById('kondisi').innerHTML = value;
+
+            //ajax untuk merubah status relay
+            var xmlhttp = new XMLHttpRequest();
+
+            xmlhttp.onreadystatechange = function()
+            {
+              if (xmlhttp.readyState == 4 && xmlhttp.status == 200 )
+              {
+                //ambil respon dari web
+                document.getElementById('kondisi').innerHTML = xmlhttp.responseText;
+              }
+            }
+            //eksekusi file PHP untuk merubah nilai database
+            xmlhttp.open("GET", "pompa.php?kondis=" + value, true);
+            //kirim data
+            xmlhttp.send();
+          }
+        </script>
+
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+
+    <style>
+.form-check {
+    display: flex;
+    align-items: center;
+}
+.form-check label {
+    margin-left: 30px;
+    font-size: 25px;
+    font-weight: 500;
+}
+.form-check .form-check-input[type=checkbox] {
+    border-radius: .25em;
+    height: 35px;
+    width: 35px;
+} 
+</style>
 
 </head>
 
@@ -241,9 +334,9 @@
                                         <div class="col mr-2">
                                             <div class=" font-weight-bold text-success text-uppercase mb-1">Fan
                                             </div>
-                                            <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button type="button" class="btn btn-secondary bg-primary">ON</button>
-                                                <button type="button" class="btn btn-secondary bg-danger">OFF</button>
+                                            <div class="form-check" style="font-size: medium;">
+                                            <input type="checkbox" class="form-check-input" id="exampleCheck1" onchange="ubahfan(this.checked)" <?php if($fan==0) echo "checked";?>>
+                                            <label class="form-check-label text-success" for="exampleCheck1" style="font-weight: bold;" id="status"><?php if($fan==0) echo "ON"; else echo "OFF"; ?></label>
                                             </div>
                                         </div>
                                         <div class="col-auto">
@@ -261,9 +354,9 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="font-weight-bold text-info text-uppercase mb-1"> Water</div>
-                                                <div class="btn-group" role="group" aria-label="Basic example">
-                                                <button type="button" class="btn btn-secondary bg-primary">ON</button>
-                                                <button type="button" class="btn btn-secondary bg-danger">OFF</button>
+                                            <div class="form-check" style="font-size: medium;">
+                                            <input type="checkbox" class="form-check-input" id="exampleCheck1" onchange="ubahpompa(this.checked)" <?php if($pompa==0) echo "checked";?>>
+                                            <label class="form-check-label text-success" for="exampleCheck1" style="font-weight: bold;" id="kondisi"><?php if($pompa==0) echo "ON"; else echo "OFF"; ?></label>
                                             </div>
                                         </div>
                                         <div class="col-auto">

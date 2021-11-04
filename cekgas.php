@@ -12,13 +12,5 @@
 	//apabila nilai belum ada,maka suhu dianggap 0
 	if( $gas == "") $gas = 0;
 
-	if ($gas <= "500") {
-  	echo "NORMAL";
-	} 	else if ($gas <= "650") 
-	{
-  	echo "TIDAK NORMAL!";
-	} 	else 
-	{
-  	echo "BERBAHAYA!!!!";
-	}
+	echo $gas;
 ?>

@@ -12,9 +12,6 @@
 	//uji, apabila nilai belum ada,maka suhu dianggap 1
 	if($api == "") $api  = 1;
 
-
-	
-
 	if ($api == 1){
 	
 		//Respon
