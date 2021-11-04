@@ -9,4 +9,5 @@
 
 	//respone balik ke nodeMCU
 	echo $pompa; // 1 atau 0
-	?>
+
+?>

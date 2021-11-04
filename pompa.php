@@ -8,14 +8,14 @@
 	if ($kondis == "ON") 
 	{
 		//ubah field fan menjadi 1
-		mysqli_query($konek, "UPDATE tb_kontrol SET pompa=0");
+		mysqli_query($konek, "UPDATE tb_kontrol SET pompa=1");
 		//Respon
 		echo "ON";
 	}
 	else
 	{
 		//ubah field fan menjadi 0
-		mysqli_query($konek, "UPDATE tb_kontrol SET pompa=1");
+		mysqli_query($konek, "UPDATE tb_kontrol SET pompa=0");
 		//Respon
 		echo "OFF";
 	}
