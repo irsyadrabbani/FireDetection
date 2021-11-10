@@ -20,9 +20,9 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <script type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
+    
 
 </head>
 
@@ -39,11 +39,13 @@
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6 d-none d-lg-block">
+                                <img src="img/fire_alarm.jpg" alt="" height="400px" width="450px">
+                            </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome!!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">Welcome</h1>
                                     </div>
                                     <form class="user" action="" method="POST">
                                         <div class="form-group">
@@ -55,9 +57,7 @@
                                             <input type="password" class="form-control form-control-user"
                                                 name="password" placeholder="Password" required>
                                         </div>
-                                        <a class="btn btn-danger btn-user btn-block" type="submit" name="submit">
-                                            Login
-                                        </a>
+                                        <button type="submit" name="submit" class="btn btn-danger btn-user btn-block">Log In</button>
                                         <hr>
                                     </form>
                                     <hr>
@@ -77,10 +77,33 @@
 
     </div>
 
-    
+    <?php
+        if (isset($_POST['submit']) ){
+          include "koneksi.php";
+          $username = $_POST['username'];
+          $password = $_POST['password'];
 
+          $cek_user = mysqli_query($konek,"SELECT * FROM tb_login WHERE username='$username'");
+          $row      = mysqli_num_rows($cek_user);
 
-    
+          if($row == 1){
+            //jalankan prosedur seleksi password
+            $fetch_pass = mysqli_fetch_assoc($cek_user);
+            $cek_pass   = $fetch_pass['password'];
+            if($cek_pass != $password){
+              echo "<script>alert('Password salah');</script>";
+            }else{
+               $_SESSION['login'] = true;
+              echo "<script>alert('Login Berhasil');document.location.href='../firedetection/'</script>";
+            }
+          }else{
+            echo"<script>alert('Username salah');</script>";
+          }
+        }
+    ?>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>

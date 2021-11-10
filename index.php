@@ -60,8 +60,7 @@
           } ); //Akhir Nilai Realtime
           </script>
 
-          <!--Relay Fan -->
-        <script type="text/javascript">
+<script type="text/javascript">
             function ubahfan(value) 
           {
             if (value==true) value="ON";
