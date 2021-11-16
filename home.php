@@ -334,8 +334,8 @@
                                             <div class=" font-weight-bold text-success text-uppercase mb-1">Fan
                                             </div>
                                             <div class="form-check" style="font-size: medium;">
-                                            <input type="checkbox" class="form-check-input" id="exampleCheck1" onchange="ubahfan(this.checked)" <?php if($fan==1) echo "checked";?>>
-                                            <label class="form-check-label text-success" for="exampleCheck1" style="font-weight: bold;" id="status"><?php if($fan==1) echo "ON"; else echo "OFF"; ?></label>
+                                            <input type="checkbox" class="form-check-input" id="exampleCheck1" onchange="ubahfan(this.checked)" <?php if($fan==0) echo "checked";?>>
+                                            <label class="form-check-label text-success" for="exampleCheck1" style="font-weight: bold;" id="status"><?php if($fan==0) echo "ON"; else echo "OFF"; ?></label>
                                             </div>
                                         </div>
                                         <div class="col-auto">
