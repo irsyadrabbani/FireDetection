@@ -15,8 +15,9 @@
   $data = mysqli_fetch_array($sql);
   // ambil status fan
   $fan = $data['fan'];
-  // ambil status pompa
+   // ambil status fan
   $pompa = $data['pompa'];
+
    
 ?>
 
@@ -55,14 +56,6 @@
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-
-        <!-- Panggil Data Grafik -->
-    <script type="text/javascript">
-      var refreshid = setInterval(function(){
-        $('#myGrafik').load('chart.php');
-      }, 3000);
-    </script>
-
     <!-- Nilai Realtime -->
             <script type="text/javascript">
           $(document).ready( function() {
@@ -70,6 +63,7 @@
               setInterval( function() {
                 $("#cekgas").load('cekgas.php');
                 $("#cekapi").load('cekapi.php');
+                $("#logaktivitas").load('logaktivitas.php');
               }, 1000 );
 
           } ); //Akhir Nilai Realtime
@@ -99,8 +93,7 @@
             xmlhttp.send();
           }
 
-            //Relay Water Pump
-            function ubahpompa(value) 
+          function ubahpompa(value) 
           {
             if (value==true) value="ON";
             else value="OFF";
@@ -122,18 +115,21 @@
             //kirim data
             xmlhttp.send();
           }
+
         </script>
 
-           <!-- Panggil Data Grafik -->
+           <!-- Panggil Data Grafik 
     <script type="text/javascript">
       var refreshid = setInterval(function(){
         $('#myGrafik').load('chart.php');
       }, 1000);
-    </script>
+    </script> -->
 
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <!-- Custom styles for table -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 
     <style>
@@ -155,7 +151,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" class="bg-dark">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -192,16 +188,12 @@
                     </a>
             </li>
 
-            
-
             <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
-
         </ul>
         <!-- End of Sidebar -->
 
@@ -212,7 +204,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light bg-danger topbar mb-4 static-top shadow">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -222,56 +214,6 @@
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
-                        <!-- Nav Item - Alerts -->
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <!-- Counter - Alerts -->
-                                <span class="badge badge-danger badge-counter">3+</span>
-                            </a>
-                            <!-- Dropdown - Alerts -->
-                            <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                                aria-labelledby="alertsDropdown">
-                                <h6 class="dropdown-header">
-                                    Alerts Center
-                                </h6>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-primary">
-                                            <i class="fas fa-file-alt text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 12, 2019</div>
-                                        <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-success">
-                                            <i class="fas fa-donate text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 7, 2019</div>
-                                        $290.29 has been deposited into your account!
-                                    </div>
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <div class="mr-3">
-                                        <div class="icon-circle bg-warning">
-                                            <i class="fas fa-exclamation-triangle text-white"></i>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="small text-gray-500">December 2, 2019</div>
-                                        Spending Alert: We've noticed unusually high spending for your account.
-                                    </div>
-                                </a>
-                                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-                            </div>
-                        </li>
                     </ul>
 
                 </nav>
@@ -286,7 +228,7 @@
                     </div>
 
                     <!-- Content Row -->
-                    <div class="row">
+                    <div class="row" style="justify-content: center;">
 
                         <!-- Gas Card-->
                         <div class="col-xl-3 col-md-6 mb-4">
@@ -296,10 +238,10 @@
                                         <div class="col mr-2">
                                             <div class="font-weight-bold text-warning text-uppercase mb-1">
                                                 Gas</div>
-                                            <div id="cekgas" class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                                            <div id="cekgas" class="h4 mb-0 font-weight-bold text-gray-800">0</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-bacon fa-2x text-gray-300"></i>
+                                            <i class="fas fa-bacon fa-2x text-gray-400"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -315,10 +257,10 @@
                                         <div class="col mr-2">
                                             <div class="font-weight-bold text-danger text-uppercase mb-1">
                                                 Fire</div>
-                                            <div id="cekapi" class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                                            <div id="cekapi" class="h4 mb-0 font-weight-bold text-gray-800">0</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fab fa-hotjar fa-2x text-gray-300"></i>
+                                            <i class="fab fa-hotjar fa-2x text-gray-400"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -339,7 +281,7 @@
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-fan fa-2x text-gray-300"></i>
+                                            <i class="fas fa-fan fa-2x text-gray-400"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -364,33 +306,69 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                     </div>
             
 
                     <!-- Content Row -->
 
-                    <div class="row">
+                    <div class="row" style="justify-content: center;">
 
-                        <!-- Area Chart -->
-                        <div class="col-xl-12 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">Gas Overview</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="myGrafik" style="width: 95%;">
-                                    <figure class="highcharts-figure">
-                                        <div id="myGrafik"></div>
-                                    </figure>
-                                </div>
+                        <!-- Log Aktivitas Chart -->
+                        <div class="card shadow mb-4">
+                        <div class="card-header py-3" width="100%">
+                            <h6 class="m-0 font-weight-bold text-primary">Log Aktivitas</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                            <table class="table table-bordered" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Itensitas Gas</th>
+                                            <th>Status Api</th>
+                                            <th>Waktu</th>
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Itensitas Gas</th>
+                                            <th>Status Api</th>
+                                            <th>Waktu</th>
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
+                                    <?php
+                                    include "koneksi.php";
+                                    // Membaca 10 data terakhir dari table sensor 
+                                    $query = mysqli_query($konek, 'SELECT * FROM tb_sensor ORDER BY id DESC LIMIT 20');
+                                    while ($data = mysqli_fetch_array($query))
+                                    {
+                                    $id = $data['id'];
+                                    $gas = $data['gas'];
+                                    $api = $data['api'];
+                                    $tanggal = $data['tanggal'];
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $id ?></td>
+                                            <td><?php echo $gas ?></td>
+                                            <td><?php if ($api == 1){
+                                                echo "AMAN";
+                                                }
+                                                else if ($api == 0)
+                                                {
+                                                echo "API TERDETEKSI";
+                                                } ?></td>
+                                            <td><?php echo $tanggal ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                       
+                                    </tbody>
+                                </table>
                             </div>
-                            </div>
-                    
-                        
-
+                        </div> 
+                        </div>
                 </div>
                 <!-- /.container-fluid -->
 
